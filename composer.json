@@ -1,0 +1,16 @@
+{
+    "require": {
+        "psy/psysh": "^0.10"
+    },
+
+    "replace": {
+        "symfony/console": "*",
+        "symfony/var-dumper": "*"
+    },
+
+    "config": {
+        "platform": {
+            "php": "7.1.3"
+        }
+    }
+}

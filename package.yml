@@ -1,0 +1,17 @@
+package: shell
+version: 1.0.0-dev
+author: Friends Of REDAXO
+supportpage: https://github.com/FriendsOfREDAXO/shell
+
+console_commands:
+    shell: rex_shell_command
+
+requires:
+    php:
+        version: '>=7.1'
+    redaxo: ^5.11
+
+installer_ignore:
+    - vendor/bin
+    - vendor/composer
+    - vendor/autoload.php
