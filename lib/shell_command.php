@@ -2,6 +2,7 @@
 
 use Psy\Configuration;
 use Psy\Output\ShellOutput;
+use Psy\VersionUpdater\Checker;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -12,22 +13,27 @@ class rex_shell_command extends rex_console_command
 {
     protected function configure()
     {
-        $this
-            ->setDescription('Interactive shell');
+        $this->setDescription('Interactive shell (REPL) via PsySH');
     }
 
     protected function execute(InputInterface $input, OutputInterface $output)
     {
-        require_once rex_addon::get('shell')->getPath('vendor/psy/psysh/src/functions.php');
+        $addon = rex_addon::get('shell');
+
+        require_once $addon->getPath('vendor/psy/psysh/src/functions.php');
 
         $output = new ShellOutput();
 
-        $config = new Configuration();
+        $config = Configuration::fromInput($input);
         $config->setOutput($output);
+        $config->setConfigDir($addon->getDataPath());
+        $config->setRuntimeDir($addon->getCachePath());
+        $config->setUpdateCheck(Checker::NEVER);
+        $config->setStartupMessage(' '); // force additional line after "Psy Shell ..."
+        $config->setEraseDuplicates(true);
         $config->setFormatterStyles([
             'aside' => ['yellow'],
             'comment' => ['yellow'],
-
             'object' => ['magenta'],
             'class' => ['magenta'],
         ]);
@@ -43,6 +49,6 @@ class rex_shell_command extends rex_console_command
         $io = $this->getStyle($input, $output);
         $io->title('REDAXO '.rex::getVersion().' shell');
 
-        return $shell->run($input, $output);
+        return $shell->run();
     }
 }
