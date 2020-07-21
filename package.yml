@@ -10,8 +10,3 @@ requires:
     php:
         version: '>=7.1'
     redaxo: ^5.11
-
-installer_ignore:
-    - vendor/bin
-    - vendor/composer
-    - vendor/autoload.php

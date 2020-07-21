@@ -12,5 +12,10 @@
         "platform": {
             "php": "7.1.3"
         }
+    },
+
+    "scripts": {
+        "post-install-cmd": "rm -rf vendor/bin vendor/composer vendor/autoload.php vendor/nikic/php-parser/bin vendor/psy/psysh/.phan vendor/psy/psysh/bin",
+        "post-update-cmd": "@post-install-cmd"
     }
 }
